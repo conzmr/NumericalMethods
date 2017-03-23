@@ -43,7 +43,7 @@ int main(){
         c[i]=b[i];
       }
     }
-
+/*
     cout << "Array b: ";
     for(i = 0; i < deg+1; i++){
         cout << b[i] << " ";
@@ -55,7 +55,7 @@ int main(){
         cout << c[i] << " ";
     }
     cout << endl;
-
+*/
     dr = ((-b[deg-1])*c[deg-2]-(-b[deg])*(c[deg-3]))/(c[deg-2]*c[deg-2]-c[deg-1]*c[deg-3]);
     ds = (c[deg-2]*(-b[deg])-c[deg-1]*(-b[deg-1]))/(c[deg-2]*c[deg-2]-c[deg-1]*c[deg-3]);
 
