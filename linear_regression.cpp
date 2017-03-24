@@ -114,8 +114,8 @@ int main(){
     cout << "y = " << a0 << " + " << a1 << "x\n" << endl;
   }
   cout << "Error estandar de la estimación: " <<  ErrEstandar << endl;
-  cout << "Coeficiente de determinacion: " << r << endl;
-  cout << "Coeficiente de correlación: " << sqrt(r) << endl;
+  cout << "Coeficiente de determinacion: " << r << endl; //r^2 es determinacion.
+  cout << "Coeficiente de correlación: " << sqrt(r) << endl; //r es correlacion.
   cout << "Error residual: " << sr << endl;
 
   /*Linealización no lineal
