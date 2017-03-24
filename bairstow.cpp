@@ -3,50 +3,44 @@
 
 using namespace std;
 
-double error = 0.1;
+double error = 0.001;
 
 int main(){
   int deg = 5;
-  int i, ir , is;
-  //double o[] = {1.25,-3.875,2.125,2.75,-3.5,1};
-  double o[] = {1,-2,3,-4,1,-1};
+  int i, j;
+  double o[] = {1.25,-3.875,2.125,2.75,-3.5,1};
   double r,s,dr,ds;
   int h;
 
-  //r=-1;
-  //s=-1;
-  r = 0;
-  s = 0;
+  r=-1;
+  s=-1;
   do{
     double b[deg+1];
-    for(i = deg; i >= 0; i--){
-      ir = i+1;
-      is = i+2;
-      if(is <= deg){
-        b[i]=b[ir]*r+b[is]*s+o[i];
+    for(i = deg, j = 0; i >= 0; i--, j++){
+      if(i == deg){
+        b[j] = o[j];
       }
-      else if(ir <= deg){
-        b[i]=b[ir]*r+o[i];
+      else if(i == deg-1){
+        b[j] = o[j] + b[j-1]*r;
       }
       else{
-        b[i]=o[i];
+        b[j] = o[j] + b[j-1]*r + b[j-2]*s;
       }
     }
+
     double c[deg+1];
-    for(i = deg; i >= 0; i--){
-      ir = i+1;
-      is = i+2;
-      if(is <= deg){
-        c[i]=c[ir]*r+c[is]*s+b[i];
+    for(i = deg, j = 0; i >= 0; i--, j++){
+      if(i == deg){
+        c[j] = b[j];
       }
-      else if(ir <= deg){
-        c[i]=c[ir]*r+b[i];
+      else if(i == deg-1){
+        c[j] = b[j] + c[j-1]*r;
       }
       else{
-        c[i]=b[i];
+        c[j] = b[j] + c[j-1]*r + c[j-2]*s;
       }
     }
-/*
+
     cout << "Array b: ";
     for(i = 0; i < deg+1; i++){
         cout << b[i] << " ";
@@ -58,7 +52,7 @@ int main(){
         cout << c[i] << " ";
     }
     cout << endl;
-*/
+
     dr = ((-b[deg-1])*c[deg-2]-(-b[deg])*(c[deg-3]))/(c[deg-2]*c[deg-2]-c[deg-1]*c[deg-3]);
     ds = (c[deg-2]*(-b[deg])-c[deg-1]*(-b[deg-1]))/(c[deg-2]*c[deg-2]-c[deg-1]*c[deg-3]);
 
