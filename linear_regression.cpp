@@ -4,11 +4,26 @@
 
 using namespace std;
 
+double fe(double alpha, double beta, double x){
+  return alpha*exp(beta*x);
+}
+
+double fp(double alpha, double beta, double x){
+  return alpha*pow(x, beta);
+}
+
 int main(){
   double n;
-  double sum_x, sum_y, sum_square_x, sum_prod, av_x, av_y, a0, a1;
+  double sum_x, sum_y, sum_square_x, sum_prod, av_x, av_y, a0, a1, alpha = 0, beta = 0;
   cout << "Enter value of n: ";
   cin >> n;
+
+  bool potencia, exponencial;
+
+  cout << "Modelo de potencia?: ";
+  cin >> potencia;
+  cout << "Modelo exponencial?: ";
+  cin >> exponencial;
 
   ifstream inx("x.txt");
   ifstream iny("y.txt");
@@ -16,12 +31,18 @@ int main(){
   if(!inx || !iny){
     cout << "Error" << endl;
   }
-  cout << "  x\t  y" << endl;
+  cout << "\n  x\t  y" << endl;
   for(int i = 0; inx && iny && i < n; i++){
-    //string line;
     double x, y;
     inx >> x;
     iny >> y;
+    if(potencia){
+      y = log10(y);
+      x = log10(x);
+    }
+    else if(exponencial){
+      y = log(y);
+    }
 
     sum_x += x;
     sum_y += y;
@@ -40,29 +61,67 @@ int main(){
   a1 = (n*sum_prod - sum_x*sum_y)/(n*sum_square_x - sum_x*sum_x);
   a0 = (av_y - a1*av_x);
 
-  double y_medida, y_calculada, x_medida, error, st;
+  if(potencia){
+    alpha = pow(10,a0);
+    beta = a1;
+  }
+  else if(exponencial){
+    alpha = exp(a0);
+    beta = a1;
+  }
+
+  //st - suma total de cuadrados alrededor de la media
+  //sr - suma total de cuadrados alrededor de la línea (error residual).
+  //st = sr, la estimación es tan mala como la media.
+  double y_medida, y_calculada, x_medida, sr, st;
 
   ifstream iny2("y.txt");
   ifstream inx2("x.txt");
   for(int i = 0; i < n; i++){
     iny2 >> y_medida;
     inx2 >> x_medida;
-    y_calculada = a0 + a1*x_medida;
-    error += pow((y_medida - y_calculada),2);
+    if(potencia){
+      y_calculada = fp(alpha, beta, x_medida);
+    }
+    else if(exponencial){
+      y_calculada = fe(alpha, beta, x_medida);
+    }
+    else{
+      y_calculada = a0 + a1*x_medida;
+    }
+    sr += pow((y_medida - y_calculada),2);
     st += pow(y_medida-(av_y),2);
   }
 
   inx2.close();
   iny2.close();
 
-  double ErrEstandar = sqrt(error/(n-2));
-  double r = sqrt((st-error)/st);
+  //Error estandar de la estimación
+  double ErrEstandar = sqrt(sr/(n-2));
+  double r = sqrt((st-sr)/st);
 
-  cout << "Sum x: " << sum_x << " | Sum y: " << sum_y << " | Sum square x: " << sum_square_x << " | Sum product x*y: " << sum_prod << endl;
-  cout << "a1 = " << a1 << " | a0 = " << a0 << endl;
-  cout << "y = " << a0 << " + " << a1 << "x" << endl;
-  cout << "Error estandar: " <<  ErrEstandar << endl;
+  cout << "\nSum x: " << sum_x << " | Sum y: " << sum_y << " | Sum square x: " << sum_square_x << " | Sum product x*y: " << sum_prod << endl;
+  cout << "\na1 = " << a1 << " | a0 = " << a0 << "\n" << endl;
+  if(potencia){
+    cout << "Alpha: " << alpha << " | Beta: " << beta << endl;
+    cout << "y = " << alpha << " * x^(" << beta << ")\n" << endl;
+  }
+  else if(exponencial){
+    cout << "Alpha: " << alpha << " | Beta: " << beta << endl;
+    cout << "y = " << alpha << " * e^(" << beta << "*x)\n" << endl;
+  }
+  else{
+    cout << "y = " << a0 << " + " << a1 << "x\n" << endl;
+  }
+  cout << "Error estandar de la estimación: " <<  ErrEstandar << endl;
   cout << "Coeficiente de determinacion: " << r << endl;
+  cout << "Coeficiente de correlación: " << sqrt(r) << endl;
+  cout << "Error residual: " << sr << endl;
+
+  /*Linealización no lineal
+  log(y) = log(alpha) + beta*x //Modelo Exponencial y = alpha*e^(beta*x)
+  log10(y) = beta*log10(x)+log(alpha) //Modelo de Potencias y = alpha*x^(beta)
+  */
 
   return 0;
 }
