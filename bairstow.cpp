@@ -163,8 +163,7 @@ void bairstow(vector<double> &pol, vector<complex_number*> &roots, double pi, do
   }
 }
 
-
-//Array must be in inverse order, where poly_array will be
+//Array must be in inverse order, where poly_array will be ordered as x^max_degree, ... , x^0.
 int main(){
   double poly_array[] = {6.7, -4, 0, 3.2, -3, 8, 1.2, 2, 0, 1, -4};
   vector<double> poly (poly_array, poly_array + sizeof(poly_array) / sizeof(double));
