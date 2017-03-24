@@ -8,12 +8,15 @@ double error = 0.1;
 int main(){
   int deg = 5;
   int i, ir , is;
-  double o[] = {1.25,-3.875,2.125,2.75,-3.5,1};
+  //double o[] = {1.25,-3.875,2.125,2.75,-3.5,1};
+  double o[] = {1,-2,3,-4,1,-1};
   double r,s,dr,ds;
   int h;
 
-  r=-1;
-  s=-1;
+  //r=-1;
+  //s=-1;
+  r = 0;
+  s = 0;
   do{
     double b[deg+1];
     for(i = deg; i >= 0; i--){
@@ -63,9 +66,20 @@ int main(){
     s = s+ds;
   }while(abs(dr/r) > error || abs(ds/s) > error);
 
-  double x1 = (r + sqrt(pow(r,2)+4*s))/2;
-  double x2 = (r - sqrt(pow(r,2)+4*s))/2;
-  cout << endl << "x1: " << x1 << " x2: " << x2 << endl;
+  double number = pow(r,2)+4*s;
+  cout << "\nNumber: " << number << endl;
+  if(number >= 0){
+    double x1 = (r + sqrt(number))/2;
+    double x2 = (r - sqrt(number))/2;
+    cout << endl << "x1: " << x1 << "\nx2: " << x2 << endl;
+  }
+  else{
+    double x1 = (r + sqrt(abs(number)))/2;
+    double x2 = (r - sqrt(abs(number)))/2;
+    cout << endl << "x1: " << x1 << "i\nx2: " << x2 << "i" << endl;
+  }
+
+
 
   return 0;
 
