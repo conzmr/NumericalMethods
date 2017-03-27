@@ -14,7 +14,7 @@ double fp(double alpha, double beta, double x){
 
 int main(){
   double n;
-  double sum_x, sum_y, sum_square_x, sum_prod, av_x, av_y, a0, a1, alpha = 0, beta = 0;
+  double sum_x, sum_y, sum_square_x, sum_prod, av_x, av_y, a0, a1, av_y_original, alpha = 0, beta = 0;
   cout << "Enter value of n: ";
   cin >> n;
 
@@ -36,6 +36,7 @@ int main(){
     double x, y;
     inx >> x;
     iny >> y;
+	av_y_original += y/n;
     if(potencia){
       y = log10(y);
       x = log10(x);
@@ -90,7 +91,7 @@ int main(){
       y_calculada = a0 + a1*x_medida;
     }
     sr += pow((y_medida - y_calculada),2);
-    st += pow(y_medida-(av_y),2);
+    st += pow(y_medida-(av_y_original),2);
   }
 
   inx2.close();
