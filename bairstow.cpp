@@ -12,7 +12,7 @@ struct complex_number {
   double i;
 };
 
-void syn_div(vector<double> &pol, vector<double> &res, vector<double> &aux, double r, double s) { // Check results on res
+void division(vector<double> &pol, vector<double> &res, vector<double> &aux, double r, double s) { // Check results on res
   int deg = pol.size() - 1;
   int i, j;
   for(i = deg, j = 0; i >= 0; i--, j++){
@@ -40,12 +40,6 @@ void syn_div(vector<double> &pol, vector<double> &res, vector<double> &aux, doub
   }
 }
 
-void cramer(double a1, double b1, double c1, double a2, double b2, double c2, double &x, double &y) {
-  double d = (a1 * b2) - (a2 * b1);
-  x = (c1 * b2 - c2 * b1) / d;
-  y = (a1 * c2 - a2 * c1) / d;
-}
-
 void bairstow(vector<double> &pol, vector<complex_number*> &roots, double pi, double qi, double err) {
   while (pol.size() > 3) {
     vector<double> res(pol.size(), 0.0);
@@ -65,7 +59,7 @@ void bairstow(vector<double> &pol, vector<complex_number*> &roots, double pi, do
         aux[i] = 0;
       }
 
-      syn_div(pol, res, aux, p, q);
+      division(pol, res, aux, p, q);
 
       cout << "Result (B) array: {";
       for (int i = 0; i < res.size(); i++) {
@@ -111,7 +105,7 @@ void bairstow(vector<double> &pol, vector<complex_number*> &roots, double pi, do
     res = vector<double>(pol.size(), 0.0);
     aux = vector<double>(pol.size(), 0.0);
 
-    syn_div(pol, res, aux, p, q);
+    division(pol, res, aux, p, q);
 
     // Adjust polynomial
     for (int i = 0; i < pol.size() - 2; i++) {
