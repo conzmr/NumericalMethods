@@ -4,7 +4,7 @@
 
 using namespace std;
 
-double error = 1e-4;
+double error = 0.001; //ERROR PARCIAL 2
 
 //struct to store the complex number in case of
 struct complex_number {
@@ -75,11 +75,11 @@ void bairstow(vector<double> &pol, vector<complex_number*> &roots, double pi, do
       dp = (-res[deg - 1] * aux[deg - 2] + res[deg] * aux[deg - 3]) / d;
       dq = (-aux[deg - 2] * res[deg] + aux[deg - 1] * res[deg - 1]) / d;
 
-      error_p = dp / p;
-      error_q = dq / q;
+      error_p = dp / p; //ERROR PARCIAL 2
+      error_q = dq / q; //ERROR PARCIAL 2
       p += dp;
       q += dq;
-    } while (abs(error_p) > err && abs(error_q) > err);
+    } while (abs(error_p) > err && abs(error_q) > err); //ERROR PARCIAL 2
 
     cout << endl;
     // 2 Roots
@@ -158,14 +158,13 @@ void bairstow(vector<double> &pol, vector<complex_number*> &roots, double pi, do
 }
 
 //Array must be in inverse order, where poly_array will be ordered as x^max_degree, ... , x^0.
-//5x^3-4x^2-x+1
+//g(x) = 0.7 x^3 - 4x^2 + 6.2x - 2
 int main(){
-  //double poly_array[] = {6.7, -4, 0, 3.2, -3, 8, 1.2, 2, 0, 1, -4};
-  double poly_array[] = {5,-4,-1,1};
+  double poly_array[] = {0.7,-4,6.2,-2};
   vector<double> poly (poly_array, poly_array + sizeof(poly_array) / sizeof(double));
   vector<complex_number*> roots;
-  double p = -1;
-  double q = -1;
+  double r = -0.5;
+  double s = -0.5;
   cout << "Original Polynomial" << endl << "------------------------------" << endl;
   cout << "{";
   for(int i = 0; i < poly.size(); i++) {
@@ -177,7 +176,7 @@ int main(){
   cout << "}" << endl;
 
   cout << endl << "Bairstow" << endl << "------------------------------" << endl;
-  bairstow(poly, roots, p, q, error);
+  bairstow(poly, roots, r, s, error);
 
   cout << endl << endl << "Roots" << endl << "------------------------------" << endl;
   for (int i = 0; i < roots.size(); i++) {

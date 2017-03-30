@@ -3,34 +3,29 @@
 
 using namespace std;
 
-double error = 0.000001;
+double error = 5; //ERROR PARCIAL 2
 
-double function_x(double y, double z, double w){
-  return (20+3*y-z+w)/8;
+double function_x(double y, double z){
+  return (3+y+z)/6;
 }
 
-double function_y(double x, double z, double w){
-  return (3+x+3*z-8*w)/20;
+double function_y(double x, double z){
+  return (40-6*x-z)/9;
 }
 
-double function_z(double x, double y, double w){
-  return (3-x-y+w)/3;
-}
-
-double function_w(double x, double y, double z){
-  return (8-6*x+4*y-11*z)/15;
+double function_z(double x, double y){
+  return (50-y+3*x)/(-12);
 }
 
 int main(){
-  double x, y, z, w;
+  double x, y, z;
   int i = 0;
   x = y = z = 0;
   do{
-    x = function_x(y,z,w);
-    y = function_y(x,z,w);
-    z = function_z(x,y,w);
-    w = function_w(x,y,z);
+    x = function_x(y,z);
+    y = function_y(x,z);
+    z = function_z(x,y);
     i++;
-    cout << i << ". x = " << x << ". y = " << y << ". z = " << z << ". w = " << w << endl;
-  }while(abs(8*x-3*y+z-w-20) > error || abs(-x+20*y-3*z+8*w-3) > error || abs(x+y+3*z-w-3) > error || abs(6*x-4*y+11*z+15*w-8) > error);
+    cout << i << ". x = " << x << ". y = " << y << ". z = " << z << endl;
+  }while(abs(3-(6*x-y-z))/3*100 > error || abs(40-(6*x+9*y+z))/40*100 > error || abs(50-(-3*x+y-12*z))/50*100 > error); //ERROR PARCIAL 2
 }
