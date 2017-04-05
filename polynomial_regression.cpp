@@ -4,15 +4,74 @@
 
 using namespace std;
 
+int size_of_row;
+
+void print_square_matrix(double **A, double sol_vector[], int n) {
+  for(int i = 0; i < n; i++) {
+    for(int j = 0; j < n; j++) {
+      cout << A[i][j] << "\t";
+    }
+    cout << "=\t" << sol_vector[i];
+    cout << endl;
+  }
+}
+
+void forward_elimination(double **A, double sol_vector[], int n) {
+  double factor;
+  for(int k = 0; k < n; k++) {
+    for(int i = k+1; i < n; i++) {
+        factor = A[i][k]/A[k][k];
+        for(int j = k; j < n; j++) {
+          A[i][j] = A[i][j] - factor*A[k][j];
+        }
+        sol_vector[i] = sol_vector[i] - factor*sol_vector[k];
+      }
+  }
+}
+
+void back_substitution(double **A, double sol_vector[], int n, double solution[]) {
+  double sum;
+  solution[n-1] = sol_vector[n-1]/A[n-1][n-1];
+  for(int i = n-2; i >= 0; i--) {
+    sum = 0;
+    for(int j = i+1; j < n; j++) {
+      sum = sum + A[i][j] * solution[j];
+    }
+    solution[i] = ( sol_vector[i] - sum ) / A[i][i];
+  }
+}
+
+void print_poly(double v[], int n) {
+  for(int i = 0; i < n; i++){
+    cout << v[i];
+    if(i != 0){
+      cout << "*x^" << i;
+    }
+    cout << " + ";
+  }
+  cout << endl;
+}
+
+void print_vector(double v[], int n) {
+  for(int i = 0; i < n; i++){
+    cout << "a" << i << " = " << v[i];
+    cout << endl;
+  }
+  cout << endl;
+}
+
 void polynomial_regression(double x[], double y[], const int degree, const int n) {
   double sum_x = 0, sum_xy = 0;
-
-  int size_of_row = degree + 1;
-
-  double linear_equations[size_of_row][size_of_row];
+  size_of_row = degree + 1;
   double sol_vector[size_of_row];
+  double **linear_equations;
 
-  cout << "\nConstructing system of linear equations..." << endl << "------------------------------------------" << endl;
+  linear_equations = new double*[size_of_row];
+  for(int i = 0; i < size_of_row; i++){
+    linear_equations[i] = new double[size_of_row];
+  }
+
+  cout << "\nConstructing system of linear equations ..." << endl << "------------------------------------------" << endl;
   for(int i = 0; i < size_of_row; i++) {
     sum_xy = 0;
 
@@ -42,6 +101,19 @@ void polynomial_regression(double x[], double y[], const int degree, const int n
     cout << "=\t" << sol_vector[i];
     cout << endl;
   }
+  cout << endl;
+  forward_elimination(linear_equations, sol_vector, size_of_row);
+  print_square_matrix(linear_equations, sol_vector, size_of_row);
+
+  cout << "\nGauss to get [a0...an] ..." << endl << "------------------------------------------" << endl;
+  double x_vector[size_of_row];
+
+  back_substitution(linear_equations, sol_vector, size_of_row, x_vector);
+  print_vector(x_vector, size_of_row);
+
+  cout << "\nPolynomial ..." << endl << "------------------------------------------" << endl;
+  print_poly(x_vector, size_of_row);
+
 }
 
 int main() {
