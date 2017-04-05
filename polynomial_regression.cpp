@@ -47,7 +47,8 @@ void print_poly(double v[], int n) {
     if(i != 0){
       cout << "*x^" << i;
     }
-    cout << " + ";
+    if(i != n-1)
+      cout << " + ";
   }
   cout << endl;
 }
@@ -75,37 +76,36 @@ void polynomial_regression(double x[], double y[], const int degree, const int n
   for(int i = 0; i < size_of_row; i++) {
     sum_xy = 0;
 
-    for(int j = 0; j < n; j++) {
+    for(int j = 0; j < n; j++)
       sum_xy += pow(x[j],i)*y[j];
-    }
     sol_vector[i] = sum_xy;
 
     for (int j = 0; j < size_of_row; j++) {
       sum_x = 0;
-      if (i == 0 && j == 0) {
+      if (i == 0 && j == 0)
         linear_equations[i][j] = n;
-      }
       else {
         //Calculate the sum of x to a certain power.
-        for (int h = 0; h < n; h++) {
+        for (int h = 0; h < n; h++)
           sum_x += pow(x[h],(j+i));
-        }
         linear_equations[i][j] = sum_x;
       }
     }
   }
-  for(int i = 0; i < size_of_row; i++){
-    for(int j = 0; j < size_of_row; j++){
+  for(int i = 0; i < size_of_row; i++) {
+    for(int j = 0; j < size_of_row; j++)
       cout << linear_equations[i][j] << "\t";
-    }
     cout << "=\t" << sol_vector[i];
     cout << endl;
   }
   cout << endl;
+
+  double sum_y = sol_vector[0];
+
+  cout << "\nGauss to get [a0...an] ..." << endl << "------------------------------------------" << endl;
   forward_elimination(linear_equations, sol_vector, size_of_row);
   print_square_matrix(linear_equations, sol_vector, size_of_row);
 
-  cout << "\nGauss to get [a0...an] ..." << endl << "------------------------------------------" << endl;
   double x_vector[size_of_row];
 
   back_substitution(linear_equations, sol_vector, size_of_row, x_vector);
@@ -113,6 +113,34 @@ void polynomial_regression(double x[], double y[], const int degree, const int n
 
   cout << "\nPolynomial ..." << endl << "------------------------------------------" << endl;
   print_poly(x_vector, size_of_row);
+
+  cout << "\nErrors ..." << endl << "------------------------------------------" << endl;
+	double e[n];
+	for (int i = 0; i < n; i++) {
+		double y_calculada = 0;
+		for (int j = size_of_row - 1; j >= 1; j--)
+			y_calculada += x_vector[j]*( pow( x[i], j ) );
+		y_calculada += x_vector[0];
+		e[i] = pow(y[i] - y_calculada,2);
+	}
+
+	double sr = 0;
+	double st = 0;
+	for (int i = 0; i < n; i++) {
+		sr += e[i];
+		st += pow(y[i] - (sum_y/n),2);
+	}
+	cout << "Sr = " << sr << endl;
+
+	double syx = sqrt(sr/(n - size_of_row));
+	cout << "St = " << st << endl;
+
+	double r2 = (st-sr)/st;
+	double r = sqrt(r2);
+	cout << "Error Estandar (S y/x): " << syx << endl;
+	cout << "Coeficiente de determinacion (r2): " << r2 << endl;
+	cout << "Coeficiente de correlacion (r): " << r << endl;
+	cout << endl;
 
 }
 
@@ -123,8 +151,8 @@ int main() {
   cout << "degree: ";
   cin >> degree;
 
-  ifstream inx("x.txt");
-  ifstream iny("y.txt");
+  ifstream inx("./data/x_1.txt");
+  ifstream iny("./data/y_1.txt");
 
   if(!inx || !iny){
     cout << "Error" << endl;
