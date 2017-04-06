@@ -151,8 +151,8 @@ int main() {
   cout << "degree: ";
   cin >> degree;
 
-  ifstream inx("./data/x_1.txt");
-  ifstream iny("./data/y_1.txt");
+  ifstream inx("./data/x_2.txt");
+  ifstream iny("./data/y_2.txt");
 
   if(!inx || !iny){
     cout << "Error" << endl;
