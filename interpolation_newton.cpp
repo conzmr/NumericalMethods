@@ -8,6 +8,7 @@ double dif_finita(double x1, double y1, double x2, double y2){
 }
 
 void newton(double *x, double *y, int n, double value){
+  cout << "Newton\n" << "=====================" << endl;
   double *res = new double[n - 1];
   double *final = new double[n - 1];
 
@@ -48,11 +49,11 @@ void newton(double *x, double *y, int n, double value){
 }
 
 int main(){
-  int n = 3;
-  double x[] = {1, 4, 6};
-  double y[] = {0, 1.386294, 1.791759};
+  int n = 5;
+  double x[] = {1, 2, 2.5, 4, 7};
+  double y[] = {1, 0.5, 0.4, 0.25, 0.14};
 
-  newton(x, y, n, 5);
+  newton(x, y, n, 3);
 
   return 0;
 }
