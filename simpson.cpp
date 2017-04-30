@@ -19,12 +19,14 @@ double simpson_third(double *values, double a, double b, int n) {
   return sum;
 }
 
-double simpson_eighth(double *values, int a, int b) {
-  return (b - a)/8 * values[0] + 3*values[1] + 3*values[2] + values[3];
+double simpson_eighth(double *values, double a, double b) {
+  return ( (b - a)/8.0 ) * (values[0] + 3*values[1] + 3*values[2] + values[3]);
 }
 
 int main(){
   double a[] = {1, 4, 9, 16, 25};
+  double b[] = {1,4,9,16};
   cout << "Simpson 1/3 multiple: " << simpson_third(a, 1, 5, 5) << endl;
+  cout << "Simpson 3/8: " << simpson_eighth(b, 1, 4) << endl;
   return 0;
 }
