@@ -4,11 +4,13 @@
 using namespace std;
 
 double f(double x){
-  return ( 0.2 + 25*x - 200*pow(x,2) + 675*pow(x,3) - 900*pow(x,4) + 400*pow(x,5) );
+  //return ( 0.2 + 25*x - 200*pow(x,2) + 675*pow(x,3) - 900*pow(x,4) + 400*pow(x,5) );
+  return ( exp(pow(x,2)) );
 }
 
 double f_individual_integral(double x){
-  return ( 0.2*x + 25*pow(x,2)/2 - 200*pow(x,3)/3 + 675*pow(x,4)/4 - 900*pow(x,5)/5 + 400*pow(x,6)/6 );
+  //return ( 0.2*x + 25*pow(x,2)/2 - 200*pow(x,3)/3 + 675*pow(x,4)/4 - 900*pow(x,5)/5 + 400*pow(x,6)/6 );
+  return ( 1 );
 }
 
 double f_integral(double a, double b){
@@ -56,10 +58,11 @@ void porcentual_error(double real, double approx){
 }
 
 int main(){
-  int number_of_rectangles = 2;
-  double real = f_integral(0,0.8);
-  porcentual_error( real, riemann_right(0,0.8,number_of_rectangles) );
-  porcentual_error( real, riemann_left(0,0.8,number_of_rectangles) );
-  porcentual_error( real, trapezoid(0,0.8,number_of_rectangles) );
+  int number_of_rectangles = 4;
+  double a = 0, b = 1;
+  double real = f_integral(a,b);
+  porcentual_error( real, riemann_right(a,b,number_of_rectangles) );
+  porcentual_error( real, riemann_left(a,b,number_of_rectangles) );
+  porcentual_error( real, trapezoid(a,b,number_of_rectangles) );
   return 0;
 }
