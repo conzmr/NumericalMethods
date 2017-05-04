@@ -1,11 +1,12 @@
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
 double simpson_third(double *values, double a, double b, int n) {
   double segments = n - 1;
   double h = (b - a)/segments/3.0;
-  cout << "h: " << h << endl;
+  cout << "h = " << h * 3 << endl;
   double sum = values[0];
 
   for(int i = 1; i < n - 1; i += 2) {
@@ -23,10 +24,25 @@ double simpson_eighth(double *values, double a, double b) {
   return ( (b - a)/8.0 ) * (values[0] + 3*values[1] + 3*values[2] + values[3]);
 }
 
+double f(double x) {
+  return exp( x );
+}
+
 int main(){
-  double a[] = {1, 4, 9, 16, 25};
-  double b[] = {1,4,9,16};
-  cout << "Simpson 1/3 multiple: " << simpson_third(a, 1, 5, 5) << endl;
-  cout << "Simpson 3/8: " << simpson_eighth(b, 1, 4) << endl;
+  int n;
+  double a, b;
+  cout << "Initial Value (a): "; cin >> a;
+  cout << "Final Value (b): "; cin >> b;
+  n = b - a + 1;
+  cout << "n = " << n << endl;
+  double v[n];
+  for(int i = a, j = 0; i <= b; i++, j++) {
+    v[j] = f(i);
+  }
+  for(int i = 0; i < n; i++) {
+    cout << v[i] << " ";
+  }
+  cout << endl;
+  cout << "Simpson 1/3: " << simpson_third(v, a, b, n) << endl;
   return 0;
 }
