@@ -4,7 +4,7 @@
 using namespace std;
 
 double f(double x){
-  return exp(pow(x,2));
+  return exp( x );
 }
 
 double trapezoid(double a, double b, int n){
@@ -46,7 +46,7 @@ double romberg(int no_of_approximations, double a, double b){
   for(int j = 1; j < no_of_approximations; j++){
     for(int i = 0; i < no_of_approximations - j; i++){
       approximations[i] = romberg_help(approximations[i], approximations[i+1], j);
-      print_array(approximations, no_of_approximations);
+      //print_array(approximations, no_of_approximations);
     }
   }
   cout << "Integral = " << approximations[0] << endl;
