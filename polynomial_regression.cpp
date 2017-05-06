@@ -132,7 +132,7 @@ void polynomial_regression(double x[], double y[], const int degree, const int n
 	}
 	cout << "Sr = " << sr << endl;
 
-	double syx = sqrt(sr/(n - size_of_row));
+	double syx = sqrt(sr/(n - degree));
 	cout << "St = " << st << endl;
 
 	double r2 = (st-sr)/st;
