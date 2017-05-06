@@ -3,14 +3,19 @@
 
 using namespace std;
 
-double dif_finita(double x1, double y1, double x2, double y2){
+double dif_finita(double x1, double y1, double x2, double y2) {
   return (y2 - y1)/(x2 - x1);
 }
 
-void newton(double *x, double *y, int n, double value){
-  cout << "Newton\n" << "=====================" << endl;
-  double *res = new double[n - 1];
-  double *_final = new double[n - 1];
+void newton(double *x, double *y, int n, double value) {
+
+	cout << "x\ty\n=============" << endl;
+	for(int i = 0; i < n; i++){
+		cout << x[i] << "\t" << y[i] << endl;
+	}
+	cout << "\nNewton\n" << "==============================" << endl;
+	double *res = new double[n - 1];
+	double *_final = new double[n - 1];
 
 
   for(int i = 0; i < n; i++){
@@ -39,10 +44,24 @@ void newton(double *x, double *y, int n, double value){
     y_aprox += x_prod;
   }
 
+  cout << endl << "Polynomial\n==============================" << endl;
+
+  cout << "f(x) = ";
+  for(int i = 0; i < n; i++){
+	  cout << _final[i];
+	  for(int j = 0; j < i; j++){
+		  cout << "(x - " << x[j] <<  ")";
+	  }
+	  if(i < n - 1){
+		  cout << " + ";
+	  }
+  }
+  cout << endl << endl << "==============================" << endl;
+
   cout << "f("<< value <<") = " << y_aprox << endl;
 }
 
-int main(){
+int main() {
   int n = 5;
   double x[] = {1, 2, 2.5, 4, 7};
   double y[] = {1, 0.5, 0.4, 0.25, 0.14};
