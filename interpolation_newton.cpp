@@ -62,11 +62,13 @@ void newton(double *x, double *y, int n, double value) {
 }
 
 int main() {
-  int n = 5;
-  double x[] = {1, 2, 2.5, 4, 7};
-  double y[] = {1, 0.5, 0.4, 0.25, 0.14};
+  int n = 3;
+  //double x[] = {1, 2, 2.5, 4, 7};
+  double x[] = {2, 3, 4};
+  //double y[] = {1, 0.5, 0.4, 0.25, 0.14};
+  double y[] = {0.5, 0.3333, 0.25};
 
-  newton(x, y, n, 3);
+  newton(x, y, n, 0.3);
 
   return 0;
 }
