@@ -132,12 +132,17 @@ void polynomial_regression(double x[], double y[], const int degree, const int n
 	}
 	cout << "Sr = " << sr << endl;
 
-	double syx = sqrt(sr/(n - degree));
+  cout << sr << " / (" << n << " - (" << degree << " + 1))" << endl;
+
+	double syx = sqrt(sr/(n - (degree + 1)));
 	cout << "St = " << st << endl;
 
 	double r2 = (st-sr)/st;
 	double r = sqrt(r2);
-	cout << "Error Estandar (S y/x): " << syx << endl;
+	cout << "Error Estandar (S y/x): " << syx;
+  if(n - degree - 1 == 0)
+    cout << "\tS y/x is a division by 0";
+  cout << endl;
 	cout << "Coeficiente de determinacion (r2): " << r2 << endl;
 	cout << "Coeficiente de correlacion (r): " << r << endl;
 	cout << endl;
