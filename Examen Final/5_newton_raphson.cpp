@@ -6,7 +6,7 @@ using namespace std;
 //#define FUNCION pow(x,7)-3;
 //#define DIFF 7*pow(x,6);
 
-double error = 0.001;
+double error = 1;
 
 double f(double x){
   return 4*pow(x,4) + 4*pow(x,2) - 1;
