@@ -36,28 +36,6 @@ double trapezoid_2(double a, double b, int n){
   return sum;
 }
 
-double riemann_right(double a, double b, double cant){
-  double delta = (b - a)/cant;
-  double sum = 0;
-  for(double i = a + delta; i <= b; i += delta){
-    //cout << "\t" << i << endl;
-    sum += f(i) * delta;
-  }
-  cout << "Riemann Right Rectangle Approximation = " << sum << endl;
-  return sum;
-}
-
-double riemann_left(double a, double b, double cant){
-  double delta = (b - a)/cant;
-  double sum = 0;
-  for(double i = a; i + delta <= b; i += delta){
-    //cout << "\t" << i << endl;
-    sum += f(i) * delta;
-  }
-  cout << "Riemann Left Rectangle Approximation = " << sum << endl;
-  return sum;
-}
-
 void porcentual_error(double real, double approx){
   cout << "Real Value = " << real << endl;
   cout << "Approximated Value = " << approx << endl;

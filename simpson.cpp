@@ -44,5 +44,8 @@ int main(){
   }
   cout << endl;
   cout << "Simpson 1/3: " << simpson_third(v, a, b, n) << endl;
+
+  double values[] = {1,4,9,16};
+  simpson_eighth(values, 1, 4);
   return 0;
 }

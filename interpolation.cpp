@@ -16,6 +16,7 @@ void lineal(){
   cout << "x: ";
   cin >> x;
   y = y1 + (y2 - y1)/(x2 - x1) * (x - x1);
+  cout << "y = " << y1 << " + (" << y2 - y1 << ") / (" << x2 - x1 << ") * ( x - "  << x1 << " )" << endl;
   cout << "Approximated value of y = " << y << endl;
 }
 
@@ -53,8 +54,8 @@ void cuadratica(){
 
 int main(){
 
-  //lineal();
-  cuadratica();
+  lineal();
+  //cuadratica();
   return 0;
 }
 

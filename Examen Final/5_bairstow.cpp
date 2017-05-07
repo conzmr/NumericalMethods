@@ -4,7 +4,7 @@
 
 using namespace std;
 
-double error = 0.00000000000001; //ERROR PARCIAL 2
+double error = 0.001; //ERROR PARCIAL 2
 
 //struct to store the complex number in case of
 struct complex_number {
@@ -164,12 +164,12 @@ void bairstow(vector<double> &pol, vector<complex_number*> &roots, double pi, do
 //g(x) = 0.7 x^3 - 4x^2 + 6.2x - 2
 int main(){
   //double poly_array[] = {0.7,-4,6.2,-2};
-  double poly_array[] = {1,-7,0,0,-7,10,-1};
+  double poly_array[] = {4,0,4,0,-1};
   //double poly_array[] = {0.041667, -0.375, 0.78333};
   vector<double> poly (poly_array, poly_array + sizeof(poly_array) / sizeof(double));
   vector<complex_number*> roots;
-  double r = -0.5;
-  double s = 0.5;
+  double r = -0.4;
+  double s = 0.4;
   cout << "Original Polynomial" << endl << "------------------------------" << endl;
   cout << "{";
   for(int i = 0; i < poly.size(); i++) {
